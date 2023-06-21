@@ -1,0 +1,44 @@
+
+install.packages("baRcodeR")
+install.packages("dplyr")
+install.packages("readxl")
+library(baRcodeR)
+library(dplyr)
+library(readxl)
+
+
+df <- read_xlsx("J:\\Clinical Research\\Yael\\2_labels.xlsx")
+
+df <- df[ ,c(1)]
+names(df)[1] = "Barcode"
+
+custom_create_PDF(
+  user = FALSE,
+  Labels = df$Barcode,
+  name = "LabelForRenton",
+  type = "linear2",
+  ErrCorr = "H",
+  Fsz = 50,
+  Across = TRUE,
+  ERows = 0,
+  ECols = 0,
+  trunc = FALSE,
+  numrow = 17,
+  numcol = 5,
+  page_width = 8.5,
+  page_height = 11.00,
+  width_margin = 0.60,
+  height_margin = 0.12,
+  label_width = 1.35,
+  label_height = 0.36,
+  x_space = 0,
+  y_space = 0,
+  alt_text = NULL,
+  replace_label = FALSE,
+  denote = c("\n(", ")")
+)
+
+
+qrcode_make(Labels, ErrCorr)
+code_128_make(Labels)
+code_128_make2(Labels)
